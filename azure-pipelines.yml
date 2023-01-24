@@ -1,3 +1,46 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@Goitom-Zeru 
+binarythistle
+/
+S03E03---Azure-Devops-and-Terraform
+Public
+Fork your own copy of binarythistle/S03E03---Azure-Devops-and-Terraform
+Code
+Issues
+1
+Pull requests
+Actions
+Projects
+Security
+Insights
+S03E03---Azure-Devops-and-Terraform/azure-pipelines.yml
+@binarythistle
+binarythistle Fixed our pipeline
+Latest commit d8c1223 on May 8, 2020
+ History
+ 1 contributor
+55 lines (49 sloc)  1.21 KB
+
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
 # Docker
 # Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
@@ -28,5 +71,18 @@ stages:
         Dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
-       
-    
+        
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
