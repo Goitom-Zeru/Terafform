@@ -1,3 +1,33 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@Goitom-Zeru 
+binarythistle
+/
+S03E03---Azure-Devops-and-Terraform
+Public
+Fork your own copy of binarythistle/S03E03---Azure-Devops-and-Terraform
+Code
+Issues
+1
+Pull requests
+Actions
+Projects
+Security
+Insights
+S03E03---Azure-Devops-and-Terraform/azure-pipelines.yml
+@binarythistle
+binarythistle Fixed our pipeline
+Latest commit d8c1223 on May 8, 2020
+ History
+ 1 contributor
+55 lines (49 sloc)  1.21 KB
+
 # Docker
 # Build a Docker image 
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
@@ -11,43 +41,48 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
 stages:
 - stage: Build
   displayName: Build image
-  jobs:  
+  jobs:
   - job: Build
     displayName: Build
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: ubuntu-latest
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'Binarythistle Docker Hub'
-        repository: 'binarythistle/weatherapi'
+        containerRegistry: 'GoitomZeru Docker Hub'
+        repository: 'gzeru/ukweatherapi'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
-- stage: Provision
-  displayName: 'Terraforming on Azure...'
-  dependsOn: Build
-  jobs:
-  - job: Provision
-    displayName: 'Provisioning Container Instance'
-    pool:
-      vmImage: 'ubuntu-latest'
-    variables: 
-    - group: TerraformEnvVars
-    steps:
-    - script: |
-        set -e
-        terraform init -input=false
-        terraform apply -input=false -auto-approve
-      name: 'RunTerraform'
-      displayName: 'Run Terraform'
-      env:
-        ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-        ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-        ARM_TENANT_ID: $(ARM_TENANT_ID)
-        ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-        TF_VAR_imagebuild: $(tag)
+        
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
